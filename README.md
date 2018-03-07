@@ -9,6 +9,9 @@ Django               //v. 2.0.3
 
 ### Setup
 Basic Guide unter https://medium.com/@djstein/modern-django-part-0-introduction-and-initial-setup-657df48f08f8
+Guides die die Projektsturktur und Django Komponenten erklären:
+https://djangoforbeginners.com/hello-world/
+https://docs.djangoproject.com/en/2.0/intro/tutorial01/
 
 #### 1. Im "/cyseclab" Verzeichnis venv aufsetzten
 ```virtualenv -p python3 venv```
@@ -21,3 +24,10 @@ Activate the virtualenv venv
 
 Install Django via pip installing all dependencies in requirements.txt
 ```pip install -Ur requirements.txt```
+
+### Ausführen
+Im "/cyseclab" Verzeichnis venv ausführen
+```source venv/bin/activate```
+
+Testserver starten (zmd. bis an Apache angebunden)
+```python manage.py runserver```
