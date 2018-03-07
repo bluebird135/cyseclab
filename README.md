@@ -14,3 +14,10 @@ Basic Guide unter https://medium.com/@djstein/modern-django-part-0-introduction-
 ```virtualenv -p python3 venv```
 
 Per default wird das Verzeichnis von der .gitignore ignoriert also bei jedem neuem clonen einmal ausfuehren.
+
+#### 2. Django im venv installieren
+Activate the virtualenv venv
+```source venv/bin/activate```
+
+Install Django via pip installing all dependencies in requirements.txt
+```pip install -Ur requirements.txt```
