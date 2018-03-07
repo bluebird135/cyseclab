@@ -2,7 +2,9 @@
 ## Setting up Django
 ### Tools & Packages
 python3 --version    //Python 3.6.3
+
 pip3 --version       //pip 9.0.1
+
 Django               //v. 2.0.3
 
 ### Setup
