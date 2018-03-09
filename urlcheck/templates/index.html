@@ -1,5 +1,6 @@
 {% extends 'bootstrap.html' %}
 
+
 {# Load the tag library #}
 {% load bootstrap3 %}
 
@@ -7,10 +8,12 @@
 {% bootstrap_css %}
 {% bootstrap_javascript %}
 
-
 {% block bootstrap3_content %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'urlcheck/style.css' %}" />
+
 	<div class="container">
-		<h1>{% block title %}SSLCHECKER{% endblock %}</h1>
+		<h1 id="header">{% block title %}SSLCHECKER{% endblock %}</h1>
 		
 
 		<form action="/checkurl/" method="post" class="form">
@@ -18,15 +21,15 @@
 			
 			<input type="text" name="textfield">
 			{% buttons %}
-				<button type="submit" class="btn btn-primary">
+				<button id="check_button" type="submit" class="btn btn-primary">
 				{% bootstrap_icon "star" %} Check Server
 				</button>
 			{% endbuttons %}
 		</form>
+		{% block checkResults %} {% endblock %}
 
-			{% autoescape off %}{% bootstrap_messages %}{% endautoescape %}
-
-			{% block content %}{% endblock %}
+		{% autoescape off %}{% bootstrap_messages %}{% endautoescape %}
 	</div>
 
 {% endblock %}
+
