@@ -1,0 +1,32 @@
+{% extends 'bootstrap.html' %}
+
+{# Load the tag library #}
+{% load bootstrap3 %}
+
+{# Load CSS and JavaScript #}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+
+{% block bootstrap3_content %}
+	<div class="container">
+		<h1>{% block title %}SSLCHECKER{% endblock %}</h1>
+		
+
+		<form action="/checkurl/" method="post" class="form">
+			{% csrf_token %}
+			
+			<input type="text" name="textfield">
+			{% buttons %}
+				<button type="submit" class="btn btn-primary">
+				{% bootstrap_icon "star" %} Check Server
+				</button>
+			{% endbuttons %}
+		</form>
+
+			{% autoescape off %}{% bootstrap_messages %}{% endautoescape %}
+
+			{% block content %}{% endblock %}
+	</div>
+
+{% endblock %}
