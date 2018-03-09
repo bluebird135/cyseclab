@@ -127,7 +127,7 @@ def check( hostname_user_input):
         
         # Process Lucky13 (optional)
 
-        
+    # TODO: Change these to BootStrap-Elements
     res = '<h3>Results for ' + str(hostname_user_input) +  ': </h3>'
     res += '<p>ROBOT ATTACK RESULT: ' + str(robot_txt) + '</p>' 
     res += '<p>HEARTBLEED ATTACK RESULT: ' + str(heartbleed_txt) +'</p>'
