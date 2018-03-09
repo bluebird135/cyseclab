@@ -12,13 +12,13 @@ from django.shortcuts import redirect
 from . import urlcheck
 
 class IndexView(TemplateView):
-    template_name = 'templates/index.html'
+    template_name = 'index.html'
 
 results = dict()
 
 class ResultView(TemplateView):
     global results
-    template_name = 'templates/base.html'
+    template_name = 'base.html'
 
     def get_context_data(self, **kwargs):
         context = super(ResultView, self).get_context_data(**kwargs)
@@ -31,7 +31,7 @@ class ResultView(TemplateView):
         return redirect("/")
         context = super(ResultView, self).get_context_data()
         messages.info(self.request, 'hello http://example.com')
-        return render(request, 'templates/base.html')
+        return render(request, 'base.html')
 
     def post(self, request):
         print("In Post")
@@ -48,7 +48,7 @@ class ResultView(TemplateView):
         messages.info(self.request, "Analysis Result for: " + str(url))
         for attack in results.keys():
             messages.info(self.request, "Vulnerable to: "+str(attack)+" -> "+results[attack])
-        return render(request, 'templates/base.html')
+        return render(request, 'base.html')
 
 def checkurl(request):
     if request.method == 'POST':
