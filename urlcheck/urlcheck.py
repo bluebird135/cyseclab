@@ -8,15 +8,15 @@ from sslyze.plugins.robot_plugin import RobotScanCommand, RobotScanResultEnum
 from sslyze.plugins.heartbleed_plugin import HeartbleedScanCommand
 from sslyze.plugins.openssl_cipher_suites_plugin import Sslv20ScanCommand, Sslv30ScanCommand
 # own imports
-import traceback, sys
 
 def check( hostname_user_input):
     try:
+        print(u'hostname_user_input: '+hostname_user_input)
         server_info = ServerConnectivityInfo(hostname=hostname_user_input) #u'google.com'
-        server_info.test_connectivity_to_server()
+        server_info.test_connectivity_to_server(network_timeout=5)
     except ServerConnectivityError as e:
     # Could not establish an SSL connection to the server
-        print(u'EXCEPTION: '+e.error_msg)
+        print(u'EXCEPTION')
         raise RuntimeError(u'Error when connecting to {}: {}'.format(hostname_user_input, e.error_msg))
     
     # If the call to test_connectivity_to_server() returns successfully, the server_info is then ready to be used for scanning the server.
@@ -127,9 +127,13 @@ def check( hostname_user_input):
         
         # Process Lucky13 (optional)
 
-    # TODO: Change these to BootStrap-Elements
-    res = '<h3>Results for ' + str(hostname_user_input) +  ': </h3>'
-    res += '<p>ROBOT ATTACK RESULT: ' + str(robot_txt) + '</p>' 
-    res += '<p>HEARTBLEED ATTACK RESULT: ' + str(heartbleed_txt) +'</p>'
-    res += '<p>DROWN ATTACK RESULT: ' + str(drown_txt) + '</p>'
+    res = dict()
+    #res["host"] = str(hostname_user_input)
+    res["ROBOT"] = str(robot_txt)
+    res["HEARTBLEED"] = str(heartbleed_txt)
+    res["DROWN"] = str(drown_txt)   
+    #res = '<h3>Results for ' + str(hostname_user_input) +  ': </h3>'
+    #res += '<p>ROBOT ATTACK RESULT: ' + str(robot_txt) + '</p>' 
+    #res += '<p>HEARTBLEED ATTACK RESULT: ' + str(heartbleed_txt) +'</p>' 
+    #res += '<p>DROWN ATTACK RESULT: ' + str(drown_txt) + '</p>'
     return res
