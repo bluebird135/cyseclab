@@ -13,7 +13,7 @@ def checkurl(request):
             result = urlcheck.check(url)
             html = result
             return HttpResponse(html)
-        except Exception:
-            return HttpResponse("no such user")
+        except Exception as e:
+            return HttpResponse(str(e))
     else:
         return render(request, 'index.html')

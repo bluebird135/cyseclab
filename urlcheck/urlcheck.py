@@ -8,6 +8,7 @@ from sslyze.plugins.robot_plugin import RobotScanCommand, RobotScanResultEnum
 from sslyze.plugins.heartbleed_plugin import HeartbleedScanCommand
 from sslyze.plugins.openssl_cipher_suites_plugin import Sslv20ScanCommand, Sslv30ScanCommand
 # own imports
+import traceback, sys
 
 def check( hostname_user_input):
     try:
@@ -15,7 +16,7 @@ def check( hostname_user_input):
         server_info.test_connectivity_to_server()
     except ServerConnectivityError as e:
     # Could not establish an SSL connection to the server
-        print(u'EXCEPTION')
+        print(u'EXCEPTION: '+e.error_msg)
         raise RuntimeError(u'Error when connecting to {}: {}'.format(hostname_user_input, e.error_msg))
     
     # If the call to test_connectivity_to_server() returns successfully, the server_info is then ready to be used for scanning the server.
@@ -62,6 +63,7 @@ def check( hostname_user_input):
     for scan_result in concurrent_scanner.get_results():
     # Sometimes a scan command can unexpectedly fail (as a bug); it is returned as a PluginRaisedExceptionResult
         if isinstance(scan_result, PluginRaisedExceptionScanResult):
+            continue
             raise RuntimeError(u'Scan command failed: {}'.format(scan_result.as_text()))
             continue
 
@@ -126,5 +128,8 @@ def check( hostname_user_input):
         # Process Lucky13 (optional)
 
         
-    res = '<h3>Results for ' + hostname_user_input +  ': </h3>'+'<p>ROBOT ATTACK RESULT: ' + robot_txt + '</p>' + '<p>HEARTBLEED ATTACK RESULT: ' + heartbleed_txt +'</p>' + '<p>DROWN ATTACK RESULT: ' + drown_txt + '</p>'
+    res = '<h3>Results for ' + str(hostname_user_input) +  ': </h3>'
+    res += '<p>ROBOT ATTACK RESULT: ' + str(robot_txt) + '</p>' 
+    res += '<p>HEARTBLEED ATTACK RESULT: ' + str(heartbleed_txt) +'</p>'
+    res += '<p>DROWN ATTACK RESULT: ' + str(drown_txt) + '</p>'
     return res
