@@ -46,9 +46,13 @@ class ResultView(TemplateView):
 
         context = super(ResultView, self).get_context_data()
         messages.info(self.request, "Analysis Result for: " + str(url))
+
+        resultList = []
         for attack in results.keys():
-            messages.info(self.request, "Vulnerable to: "+str(attack)+" -> "+results[attack])
-        return render(request, 'base.html')
+            resultList.append([str(attack), results[attack]])
+
+        context_dict = {'resultList': resultList}
+        return render(request, 'base.html', context_dict)
 
 def checkurl(request):
     if request.method == 'POST':

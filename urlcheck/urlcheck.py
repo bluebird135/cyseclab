@@ -78,10 +78,10 @@ def check( hostname_user_input):
                 robot_txt = 'VULNERABLE - Weak oracle, the attack would take too long'
 
             elif result_enum == RobotScanResultEnum.NOT_VULNERABLE_NO_ORACLE:
-                robot_txt = 'OK - Not vulnerable'
+                robot_txt = 'Not vulnerable'
 
             elif result_enum == RobotScanResultEnum.NOT_VULNERABLE_RSA_NOT_SUPPORTED:
-                robot_txt = 'OK - Not vulnerable, RSA cipher suites not supported'
+                robot_txt = 'Not vulnerable, RSA cipher suites not supported'
 
             elif result_enum == RobotScanResultEnum.UNKNOWN_INCONSISTENT_RESULTS:
                 robot_txt = 'UNKNOWN - Received inconsistent results'
@@ -89,7 +89,7 @@ def check( hostname_user_input):
         # Process Heartbleed    
         elif isinstance(scan_result.scan_command, HeartbleedScanCommand):
             result_heartbleed = scan_result.is_vulnerable_to_heartbleed
-            heartbleed_txt = 'OK - Not vulnerable'
+            heartbleed_txt = 'Not vulnerable'
             if result_heartbleed == True:
                 heartbleed_txt = 'VULNERABLE'
                 
@@ -104,7 +104,7 @@ def check( hostname_user_input):
         
         # Process DROWN (a server is vulnerable to DROWN if it allows SSLv2 connections) Ref = https://drownattack.com/
         if isinstance(scan_result.scan_command, Sslv20ScanCommand):
-            drown_txt = 'OK - Not vulnerable'
+            drown_txt = 'Not vulnerable'
             print(u'SSLV2 cipher suites')
             for cipher in scan_result.accepted_cipher_list:
                 print(u'    {}'.format(cipher.name))
