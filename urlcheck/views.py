@@ -15,9 +15,22 @@ class IndexView(TemplateView):
 
 results = dict()
 descriptions = dict()
-descriptions["ROBOT"] = "ROBOT DESCRIPTION"
-descriptions["HEARTBLEED"] = "HEARTBLEED DESCRIPTION"
-descriptions["DROWN"] = "DROWN DESCRIPTION"
+robotdesc = "The Return Of Bleichenbacher's Oracle Threat, or ROBOT for short, is a vulnerability that allows performing RSA decryption and signing operations with the private key of a TLS server. "
+robotdesc += "In 1998, Daniel Bleichenbacher discovered that the error messages given by SSL servers for errors in the PKCS #1 v1.5 padding allowed an adaptive-chosen ciphertext attack; "
+robotdesc += "this attack fully breaks the confidentiality of TLS when used with RSA encryption. With some slight modifications the vulnerability can still be used today against many HTTPS hosts in todays internet. "
+robotdesc += "For more information visit https://robotattack.org/"
+
+heartbleeddesc = "Heartbleed is a security bug in the OpenSSL cryptography library. Since it is commonly used for the implementation in Transport Layer Security (TLS), the bug can affect many webservers. "
+heartbleeddesc += "It was introduced in the software in 2012 and publicly disclosed and patched in April of 2014 and consists of an buffer over-read in the implementation "
+heartbleeddesc += "of the TLS heartbeat extension due to improper input validation. For more information visit http://heartbleed.com/"
+
+drowndesc = "The DROWN (Decrypting RSA with Obsolete and Weakened eNcryption) attack is a cross-protocol bug that attacks servers supporting modern TLS procotols by using their support for deprecated and insecure protocols like SSLv2. "
+drowndesc += "If the protocols share the same public key credentials, as is the normal case, an attacker can attack the SSLv2 connection and decrypt captured handshakes of TLS connections"
+drowndesc += "For more information visit https://drownattack.com/"
+
+descriptions["ROBOT"] = robotdesc
+descriptions["HEARTBLEED"] = heartbleeddesc
+descriptions["DROWN"] = drowndesc
 
 class ResultView(TemplateView):
     global results
