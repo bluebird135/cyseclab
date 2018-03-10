@@ -45,13 +45,12 @@ class ResultView(TemplateView):
             return HttpResponse(str(e))
 
         context = super(ResultView, self).get_context_data()
-        messages.info(self.request, "Analysis Result for: " + str(url))
 
         resultList = []
         for attack in results.keys():
             resultList.append([str(attack), results[attack]])
 
-        context_dict = {'resultList': resultList}
+        context_dict = {'resultList': resultList, 'hostURL': url}
         return render(request, 'base.html', context_dict)
 
 def checkurl(request):

@@ -12,24 +12,41 @@
 {% load static %}
 <link rel="stylesheet" type="text/css" href="{% static 'urlcheck/style.css' %}" />
 
+{% block js %}
+<script>
+	function showAnalyzeText() {
+		var input = document.getElementById("urlInput").value
+		document.getElementById("loadingHead").innerHTML = "Analysing";
+		document.getElementById("loadingText").innerHTML = input;
+		document.getElementById("loadingFoot").innerHTML = "...";
+	}
+</script>
+
+{% endblock js %}
+
 	<div class="container">
-		<h1 id="header">{% block title %}SSLCHECKER{% endblock %}</h1>
+		<h1 class="centeredText">{% block title %}SSLCHECKER{% endblock %}</h1>
 		
 
-		<form action="/checkurl/" method="post" class="form">
+		<form action="/checkurl/" method="post" class="form centeredText">
 			{% csrf_token %}
 			
-			<input type="text" name="textfield">
+			<input id="urlInput" type="text" name="textfield">
 			{% buttons %}
-				<button id="check_button" type="submit" class="btn btn-primary">
+				<button id="check_button" type="submit" class="btn btn-primary" onclick="showAnalyzeText()">
 				{% bootstrap_icon "star" %} Check Server
 				</button>
 			{% endbuttons %}
 		</form>
-		{% block checkResults %} {% endblock %}
+
+		<div>
+			<div class="centeredText" id="loadingHead"></div>
+			<div class="centeredText" id="loadingText"></div>
+			<div class="centeredText" id="loadingFoot"></div>
+		</div>
 
 		{% autoescape off %}{% bootstrap_messages %}{% endautoescape %}
+		{% block checkResults %} {% endblock %}
 	</div>
-
 {% endblock %}
 
