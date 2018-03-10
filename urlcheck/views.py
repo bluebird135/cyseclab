@@ -14,6 +14,10 @@ class IndexView(TemplateView):
     template_name = 'index.html'
 
 results = dict()
+descriptions = dict()
+descriptions["ROBOT"] = "ROBOT DESCRIPTION"
+descriptions["HEARTBLEED"] = "HEARTBLEED DESCRIPTION"
+descriptions["DROWN"] = "DROWN DESCRIPTION"
 
 class ResultView(TemplateView):
     global results
@@ -47,7 +51,7 @@ class ResultView(TemplateView):
 
         resultList = []
         for attack in results.keys():
-            resultList.append([str(attack), results[attack]])
+            resultList.append([attack, results[attack], descriptions[attack]])
 
         context_dict = {'resultList': resultList, 'hostURL': url}
         return render(request, 'base.html', context_dict)
