@@ -9,3 +9,11 @@
 #threatRow {
 	width: 80%;
 }
+
+.glyphicon-ok {
+	color: green;
+}
+
+.glyphicon-remove {
+	color: red;
+}

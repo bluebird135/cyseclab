@@ -3,7 +3,6 @@ from django.shortcuts import render
 from django.shortcuts import HttpResponse
 from django.core.exceptions import *
 
-
 from django.views.generic.base import TemplateView
 from django.contrib import messages
 from django.shortcuts import redirect
@@ -52,24 +51,3 @@ class ResultView(TemplateView):
 
         context_dict = {'resultList': resultList, 'hostURL': url}
         return render(request, 'base.html', context_dict)
-
-def checkurl(request):
-    if request.method == 'POST':
-        url = request.POST.get('textfield', None)
-        try:
-            results = urlcheck.check(url)
-            html = results
-            #return HttpResponse(html)
-            print('Analysis Result: ')
-            print(str(html))
-            return ResultView.as_view()(request)
-        except Exception as e:
-            import traceback
-            print('Exception occured! '+str(e)+'\n')
-            traceback.print_exc()
-            return HttpResponse(str(e))
-    else:
-        return render(request, 'index.html')
-
-def index(request):
-    return render(request, 'base.html')

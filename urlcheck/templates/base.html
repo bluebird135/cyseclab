@@ -1,12 +1,13 @@
 {% extends "index.html" %}
 {% block checkResults %}
-<h4 class="centeredText">Analysis results for: {{hostURL}}</h4>
+<h4>Analysis results for: {{hostURL}}</h4>
 
 <table class="table table-hover">
 	<thead>
 		<tr>
 			<th id="threatRow" scope="col">Threat</th>
 			<th scope="col">Result</th>
+			<th scope="col"></th>
 		</tr>
 	</thead>
 	<tbody>
@@ -14,6 +15,11 @@
 		<tr data-toggle="collapse" data-target="#{{i.0}}" class="accordion-toggle">
 			<th scope="row">{{i.0}}</th>
 			<td>{{i.1}}</td>
+			{% if i.1 == "Not vulnerable" %}
+				<td><span class="glyphicon glyphicon-ok"></td>
+			{% else %}
+				<td><span class="glyphicon glyphicon-remove"></td>
+			{% endif %}
 		</tr>
 		<tr >
 			<td colspan="6" class="hiddenRow"><div class="accordian-body collapse" id="{{i.0}}"> Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. </div> </td>
