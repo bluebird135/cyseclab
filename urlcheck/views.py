@@ -1,6 +1,5 @@
 from django.shortcuts import render
 from django.shortcuts import render
-from django.shortcuts import HttpResponse
 from django.core.exceptions import *
 
 from django.views.generic.base import TemplateView
@@ -58,7 +57,8 @@ class ResultView(TemplateView):
             import traceback
             print('Exception occured! '+str(e)+'\n')
             traceback.print_exc()
-            return HttpResponse(str(e))
+            context_dict = {'errorMessage': str(e)}
+            return render(request, 'index.html', context_dict)
 
         context = super(ResultView, self).get_context_data()
 

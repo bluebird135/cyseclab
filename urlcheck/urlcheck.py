@@ -17,7 +17,7 @@ def check( hostname_user_input):
     except ServerConnectivityError as e:
     # Could not establish an SSL connection to the server
         print(u'EXCEPTION')
-        raise RuntimeError(u'Error when connecting to {}: {}'.format(hostname_user_input, e.error_msg))
+        raise RuntimeError(u'Error when connecting to {}: {}!'.format(hostname_user_input, e.error_msg))
     
     # If the call to test_connectivity_to_server() returns successfully, the server_info is then ready to be used for scanning the server.
     

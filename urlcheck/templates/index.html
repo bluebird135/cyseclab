@@ -15,7 +15,7 @@
 {% block js %}
 <script>
 	function showAnalyzeText() {
-		var input = document.getElementById("urlInput").value
+		var input = document.getElementById("urlInput").value;
 		document.getElementById("loadingHead").innerHTML = "Analysing";
 		document.getElementById("loadingText").innerHTML = input;
 		document.getElementById("loadingFoot").innerHTML = "...";
@@ -25,9 +25,8 @@
 {% endblock js %}
 
 	<div class="container">
-		<h1 class="centeredText">{% block title %}SSLCHECKER{% endblock %}</h1>
+		<h1 class="centeredText"><a href="/">{% block title %}SSLCHECKER{% endblock %}</a></h1>
 		
-
 		<form action="/checkurl/" method="post" class="form centeredText">
 			{% csrf_token %}
 			
@@ -38,6 +37,10 @@
 				</button>
 			{% endbuttons %}
 		</form>
+
+		{% if errorMessage %}
+			<div class="errorMessage centeredText">{{errorMessage}}</div>
+		{% endif %}
 
 		<div>
 			<div class="centeredText" id="loadingHead"></div>

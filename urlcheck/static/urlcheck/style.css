@@ -1,5 +1,5 @@
 .centeredText {
-	text-align:center
+	text-align: center;
 }
 
 #check_button {
@@ -17,3 +17,17 @@
 .glyphicon-remove {
 	color: red;
 }
+
+.errorMessage {
+	color: red;
+	padding-bottom: 10px;
+}
+
+h1 a:link {
+	text-decoration:none;
+}
+
+h1 a:visited{
+	color: black;
+}
+
