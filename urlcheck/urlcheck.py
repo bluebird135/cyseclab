@@ -105,7 +105,8 @@ def check( hostname_user_input):
             for cipher in scan_result.accepted_cipher_list:
                 #print(u'    {}'.format(cipher.name)) # check if CBC is contained in one of the cipher suites
                 if 'CBC' in cipher.name:
-                    poodle_txt = 'VULNERABLE'                               
+                    poodle_txt = 'VULNERABLE'
+                    break                               
         
         # Process DROWN (a server is vulnerable to DROWN if it allows SSLv2 connections) Ref = https://drownattack.com/
         if isinstance(scan_result.scan_command, Sslv20ScanCommand):
