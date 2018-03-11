@@ -24,12 +24,17 @@ heartbleeddesc += "It was introduced in the software in 2012 and publicly disclo
 heartbleeddesc += "of the TLS heartbeat extension due to improper input validation. For more information visit http://heartbleed.com/"
 
 drowndesc = "The DROWN (Decrypting RSA with Obsolete and Weakened eNcryption) attack is a cross-protocol bug that attacks servers supporting modern TLS procotols by using their support for deprecated and insecure protocols like SSLv2. "
-drowndesc += "If the protocols share the same public key credentials, as is the normal case, an attacker can attack the SSLv2 connection and decrypt captured handshakes of TLS connections"
-drowndesc += "For more information visit https://drownattack.com/"
+drowndesc += "If the protocols share the same public key credentials, as is the normal case, an attacker can attack the SSLv2 connection and decrypt captured handshakes of TLS connections."
+drowndesc += " For more information visit https://drownattack.com/"
+
+poodledesc = "The POODLE attack (which stands for Padding Oracle On Downgraded Legacy Encryption) is a man-in-the-middle exploit which takes advantage of Internet and security software clients' fallback to SSL 3.0 "
+poodledesc += " If attackers successfully exploit this vulnerability, on average, they only need to make 256 SSL 3.0 requests to reveal one byte of encrypted messages."
+poodledesc += " For more information visit https://www.us-cert.gov/ncas/alerts/TA14-290A"
 
 descriptions["ROBOT"] = robotdesc
 descriptions["HEARTBLEED"] = heartbleeddesc
 descriptions["DROWN"] = drowndesc
+descriptions["POODLE"] = poodledesc
 
 class ResultView(TemplateView):
     global results

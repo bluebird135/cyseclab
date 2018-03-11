@@ -13,7 +13,7 @@ def check( hostname_user_input):
     try:
         print(u'hostname_user_input: '+hostname_user_input)
         server_info = ServerConnectivityInfo(hostname=hostname_user_input) #u'google.com'
-        server_info.test_connectivity_to_server(network_timeout=5)
+        server_info.test_connectivity_to_server(network_timeout=10)
     except ServerConnectivityError as e:
     # Could not establish an SSL connection to the server
         print(u'EXCEPTION')
@@ -59,6 +59,7 @@ def check( hostname_user_input):
     robot_txt = None
     heartbleed_txt = None
     drown_txt = None
+    poodle_txt = None
     print(u'\nProcessing results...')
     for scan_result in concurrent_scanner.get_results():
     # Sometimes a scan command can unexpectedly fail (as a bug); it is returned as a PluginRaisedExceptionResult
@@ -98,9 +99,13 @@ def check( hostname_user_input):
         # Process BREACH (BREACH is an instance of the CRIME attack against HTTP compression (the use of gzip or DEFLATE data compression algorithms via the content-encoding option within HTTP)
         
         # Process POODLE (a server is vulerable to POOD if it supports SSLv3 with CBC in the list of accepted cipher suites + some TLS Versions which don't enforce padding rules (how to test?-> https://github.com/exploresecurity/test_poodle_tls/blob/master/test_poodle_tls.py)
-        elif isinstance(scan_result.scan_command, HeartbleedScanCommand):
+        elif isinstance(scan_result.scan_command, Sslv30ScanCommand):
+            poodle_txt = 'Not vulnerable'
+            print('Checking for POODLE')
             for cipher in scan_result.accepted_cipher_list:
-                print('') # check if CBC is contained in one of the cipher suites            
+                #print(u'    {}'.format(cipher.name)) # check if CBC is contained in one of the cipher suites
+                if 'CBC' in cipher.name:
+                    poodle_txt = 'VULNERABLE'                               
         
         # Process DROWN (a server is vulnerable to DROWN if it allows SSLv2 connections) Ref = https://drownattack.com/
         if isinstance(scan_result.scan_command, Sslv20ScanCommand):
@@ -131,7 +136,8 @@ def check( hostname_user_input):
     #res["host"] = str(hostname_user_input)
     res["ROBOT"] = str(robot_txt)
     res["HEARTBLEED"] = str(heartbleed_txt)
-    res["DROWN"] = str(drown_txt)   
+    res["DROWN"] = str(drown_txt)
+    res["POODLE"] = str(poodle_txt)   
     #res = '<h3>Results for ' + str(hostname_user_input) +  ': </h3>'
     #res += '<p>ROBOT ATTACK RESULT: ' + str(robot_txt) + '</p>' 
     #res += '<p>HEARTBLEED ATTACK RESULT: ' + str(heartbleed_txt) +'</p>' 
