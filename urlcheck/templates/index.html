@@ -16,9 +16,8 @@
 <script>
 	function showAnalyzeText() {
 		var input = document.getElementById("urlInput").value;
-		document.getElementById("loadingHead").innerHTML = "Analysing";
-		document.getElementById("loadingText").innerHTML = input;
-		document.getElementById("loadingFoot").innerHTML = "...";
+		document.getElementById("loadingText").innerHTML = "Analysing "+input+" ...";
+		document.getElementById("loadingMessage").style.visibility = "visible";
 	}
 </script>
 
@@ -32,9 +31,8 @@
 			
 			<input id="urlInput" type="text" name="textfield">
 			{% buttons %}
-				<button id="check_button" type="submit" class="btn btn-primary" onclick="showAnalyzeText()">
-				{% bootstrap_icon "star" %} Check Server
-				</button>
+				<button id="check_button" type="submit" class="btn btn-primary text-center" onclick="showAnalyzeText()"><span class="glyphicon glyphicon-search fa-5x"></span><br>Check Server</button>
+
 			{% endbuttons %}
 		</form>
 
@@ -42,10 +40,9 @@
 			<div class="errorMessage centeredText">{{errorMessage}}</div>
 		{% endif %}
 
-		<div>
-			<div class="centeredText" id="loadingHead"></div>
+		<div id="loadingMessage"> 
 			<div class="centeredText" id="loadingText"></div>
-			<div class="centeredText" id="loadingFoot"></div>
+			<div class="loader"></div> 
 		</div>
 
 		{% autoescape off %}{% bootstrap_messages %}{% endautoescape %}
