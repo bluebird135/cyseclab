@@ -1,5 +1,5 @@
 #loadingMessage {
-	height:75px;
+	height:85px;
 	visibility: hidden;
 }
 
@@ -62,8 +62,8 @@ h1 a:visited{
 	cursor: pointer;
 }
 
-#analysisheader {
-	margin-left: 2px;
+.clickAble {
+	cursor: pointer;
 }
 
 #check_button {
@@ -72,4 +72,12 @@ h1 a:visited{
 
 #urlInput {
 	margin-top:5px;
+}
+
+.form-group {
+	margin-bottom: 10px;
+}
+
+.thead {
+	background-color: #f5f5f5;
 }

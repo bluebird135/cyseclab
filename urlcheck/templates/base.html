@@ -1,9 +1,24 @@
 {% extends "index.html" %}
 {% block checkResults %}
-<h4 id="analysisheader">Analysis results for: {{hostURL}}</h4>
+
+<div class="panel-group clickAble" id="accordion">
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h4 class="panel-title centeredText">
+				<div data-toggle="collapse" data-parent="#accordion" href="#collapse2">Show certificate</div>
+			</h4>
+		</div>
+		<div id="collapse2" class="panel-collapse collapse">
+			<img src="https://data.whicdn.com/images/168870788/large.jpg" style="display:block;margin:auto">
+		</div>
+	</div>
+</div> 
+
+
+<h4 class="centeredText">Analysis results for: {{hostURL}}</h4>
 <div class="panel panel-default">
 	<table class="table table-hover">
-		<thead class="thead-default">
+		<thead class="thead">
 			<tr>
 				<th id="threatRow" scope="col">Threat</th>
 				<th scope="col">Result</th>
