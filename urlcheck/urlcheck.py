@@ -114,6 +114,7 @@ def check( hostname_user_input):
             for cipher in scan_result.accepted_cipher_list:
                 print(u'    {}'.format(cipher.name))
                 drown_txt = 'VULNERABLE'
+                break
                 
         # Process deprecated/weak ciphers - NEED TO COMBINE WITH POODLE/DROWN/...
         # Ref: https://nabla-c0d3.github.io/sslyze/documentation/available-scan-commands.html#module-sslyze.plugins.openssl_cipher_suites_plugin
