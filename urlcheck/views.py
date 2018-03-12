@@ -31,7 +31,8 @@ poodledesc = "The POODLE attack (which stands for Padding Oracle On Downgraded L
 poodledesc += " If attackers successfully exploit this vulnerability, on average, they only need to make 256 SSL 3.0 requests to reveal one byte of encrypted messages."
 poodledesc += " For more information visit https://www.us-cert.gov/ncas/alerts/TA14-290A"
 
-weakciphersdesc = "BLABLA"
+weakciphersdesc = "In order to secure data that is being transferred, TLS/SSL makes use of one or more cipher suites. A cipher suite is a combination of authentication, encryption and message authentication code (MAC) algorithms. All of which are used during the negotiation of security settings for a TLS/SSL connection as well as for the secure transfer of data."
+weakciphersdesc += " For more information visit https://www.acunetix.com/blog/articles/tls-ssl-cipher-hardening/"
 
 descriptions["ROBOT"] = robotdesc
 descriptions["HEARTBLEED"] = heartbleeddesc
