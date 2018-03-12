@@ -31,10 +31,13 @@ poodledesc = "The POODLE attack (which stands for Padding Oracle On Downgraded L
 poodledesc += " If attackers successfully exploit this vulnerability, on average, they only need to make 256 SSL 3.0 requests to reveal one byte of encrypted messages."
 poodledesc += " For more information visit https://www.us-cert.gov/ncas/alerts/TA14-290A"
 
+weakciphersdesc = "BLABLA"
+
 descriptions["ROBOT"] = robotdesc
 descriptions["HEARTBLEED"] = heartbleeddesc
 descriptions["DROWN"] = drowndesc
 descriptions["POODLE"] = poodledesc
+descriptions["WEAKCIPHERS"] = weakciphersdesc
 
 class ResultView(TemplateView):
     global results

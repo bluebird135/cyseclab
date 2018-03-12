@@ -141,7 +141,7 @@ def check( hostname_user_input):
     weak_ciphers = getWeakCiphers(potential_weak_ciphers)
     print("potential_weak_ciphers:")
     print(potential_weak_ciphers)
-    print("\nweak_ciphers::")
+    print("\nweak_ciphers:")
     print(weak_ciphers)
 
     
@@ -151,6 +151,7 @@ def check( hostname_user_input):
     res["HEARTBLEED"] = str(heartbleed_txt)
     res["DROWN"] = str(drown_txt)
     res["POODLE"] = str(poodle_txt)   
+    res["WEAKCIPHERS"] = 'Not vulnerable' if len(weak_ciphers) == 0 else '\n'.join(str(s) for s in weak_ciphers)
     return res
 
 
