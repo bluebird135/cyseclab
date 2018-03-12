@@ -60,6 +60,7 @@ def check( hostname_user_input):
     heartbleed_txt = None
     drown_txt = None
     poodle_txt = None
+    potential_weak_ciphers = set()
     print(u'\nProcessing results...')
     for scan_result in concurrent_scanner.get_results():
     # Sometimes a scan command can unexpectedly fail (as a bug); it is returned as a PluginRaisedExceptionResult
@@ -101,47 +102,80 @@ def check( hostname_user_input):
         # Process POODLE (a server is vulerable to POOD if it supports SSLv3 with CBC in the list of accepted cipher suites + some TLS Versions which don't enforce padding rules (how to test?-> https://github.com/exploresecurity/test_poodle_tls/blob/master/test_poodle_tls.py)
         elif isinstance(scan_result.scan_command, Sslv30ScanCommand):
             poodle_txt = 'Not vulnerable'
-            print('Checking for POODLE')
             for cipher in scan_result.accepted_cipher_list:
-                #print(u'    {}'.format(cipher.name)) # check if CBC is contained in one of the cipher suites
+                potential_weak_ciphers.add(cipher.name)
                 if 'CBC' in cipher.name:
                     poodle_txt = 'VULNERABLE'
-                    break                               
+                               
         
         # Process DROWN (a server is vulnerable to DROWN if it allows SSLv2 connections) Ref = https://drownattack.com/
-        if isinstance(scan_result.scan_command, Sslv20ScanCommand):
-            drown_txt = 'Not vulnerable'
-            print(u'SSLV2 cipher suites')
-            for cipher in scan_result.accepted_cipher_list:
-                print(u'    {}'.format(cipher.name))
-                drown_txt = 'VULNERABLE'
-                break
-                
-        # Process deprecated/weak ciphers - NEED TO COMBINE WITH POODLE/DROWN/...
-        # Ref: https://nabla-c0d3.github.io/sslyze/documentation/available-scan-commands.html#module-sslyze.plugins.openssl_cipher_suites_plugin
         elif isinstance(scan_result.scan_command, Sslv20ScanCommand):
-            # Do something with the result
-            print(u'SSLV2 cipher suites')
+            drown_txt = 'Not vulnerable'
             for cipher in scan_result.accepted_cipher_list:
-                print(u'    {}'.format(cipher.name))
+                potential_weak_ciphers.add(cipher.name)
+                drown_txt = 'VULNERABLE'
+
                 
-        elif isinstance(scan_result.scan_command, Sslv30ScanCommand):
-            # Do something with the result
-            print(u'SSLV3 cipher suites')
+        # Collect deprecated/weak ciphers - NEED TO COMBINE WITH POODLE/DROWN/...
+        # Ref: https://nabla-c0d3.github.io/sslyze/documentation/available-scan-commands.html#module-sslyze.plugins.openssl_cipher_suites_plugin
+                
+        elif isinstance(scan_result.scan_command, Tlsv10ScanCommand):
             for cipher in scan_result.accepted_cipher_list:
-                print(u'    {}'.format(cipher.name))
-        # .. Repeat for other TLS Versions and gather results
+                potential_weak_ciphers.add(cipher.name)
+
+        elif isinstance(scan_result.scan_command, Tlsv11ScanCommand):
+            for cipher in scan_result.accepted_cipher_list:
+                potential_weak_ciphers.add(cipher.name)
+
+        elif isinstance(scan_result.scan_command, Tlsv12ScanCommand):
+            for cipher in scan_result.accepted_cipher_list:
+                potential_weak_ciphers.add(cipher.name)
+
+        elif isinstance(scan_result.scan_command, Tlsv13ScanCommand):
+            for cipher in scan_result.accepted_cipher_list:
+                potential_weak_ciphers.add(cipher.name)
         
         # Process Lucky13 (optional)
+    
+    # Process weak ciphers
+    weak_ciphers = getWeakCiphers(potential_weak_ciphers)
+    print("potential_weak_ciphers:")
+    print(potential_weak_ciphers)
+    print("\nweak_ciphers::")
+    print(weak_ciphers)
 
+    
     res = dict()
     #res["host"] = str(hostname_user_input)
     res["ROBOT"] = str(robot_txt)
     res["HEARTBLEED"] = str(heartbleed_txt)
     res["DROWN"] = str(drown_txt)
     res["POODLE"] = str(poodle_txt)   
-    #res = '<h3>Results for ' + str(hostname_user_input) +  ': </h3>'
-    #res += '<p>ROBOT ATTACK RESULT: ' + str(robot_txt) + '</p>' 
-    #res += '<p>HEARTBLEED ATTACK RESULT: ' + str(heartbleed_txt) +'</p>' 
-    #res += '<p>DROWN ATTACK RESULT: ' + str(drown_txt) + '</p>'
     return res
+
+
+# TODO Order by appearance in cipher_suite_name for better performance
+def getWeakCiphers(pot_weak_ciphers):
+    weak_ciphers = set()
+    for cipher in pot_weak_ciphers:
+        if '_RC2_' in cipher:
+            weak_ciphers.add(cipher)
+        elif '_RC4_' in cipher:
+            weak_ciphers.add(cipher)
+        elif '_DES_' in cipher:
+            weak_ciphers.add(cipher)
+        elif '_3DES_' in cipher:
+            weak_ciphers.add(cipher)
+        elif 'NULL' in cipher:
+            weak_ciphers.add(cipher)
+        # Additional weak ciphers
+        elif '_EXPORT_' in cipher:
+            weak_ciphers.add(cipher)
+        elif '_anon_' in cipher:
+            weak_ciphers.add(cipher)
+        elif '_MD5' in cipher:
+            weak_ciphers.add(cipher)
+        elif '_DSA_' in cipher:
+            weak_ciphers.add(cipher)
+    return weak_ciphers
+
