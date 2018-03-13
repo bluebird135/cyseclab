@@ -90,7 +90,7 @@ def check( hostname_user_input):
                 robot_txt = 'Not vulnerable, RSA cipher suites not supported'
 
             elif result_enum == RobotScanResultEnum.UNKNOWN_INCONSISTENT_RESULTS:
-                robot_txt = 'Uknown - Received inconsistent results'
+                robot_txt = 'Unknown - Received inconsistent results'
 
         elif isinstance(scan_result.scan_command, CompressionScanCommand):
             compression_text = "Vulnerable"
