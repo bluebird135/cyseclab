@@ -60,6 +60,7 @@ def check( hostname_user_input):
     heartbleed_txt = None
     drown_txt = None
     poodle_txt = None
+    beast_txt = None
     potential_weak_ciphers = set()
     print(u'\nProcessing results...')
     for scan_result in concurrent_scanner.get_results():
@@ -120,8 +121,10 @@ def check( hostname_user_input):
         # Ref: https://nabla-c0d3.github.io/sslyze/documentation/available-scan-commands.html#module-sslyze.plugins.openssl_cipher_suites_plugin
                 
         elif isinstance(scan_result.scan_command, Tlsv10ScanCommand):
+            beast_txt = "Not vulnerable"
             for cipher in scan_result.accepted_cipher_list:
                 potential_weak_ciphers.add(cipher.name)
+                beast_txt = "Vulnerable"
 
         elif isinstance(scan_result.scan_command, Tlsv11ScanCommand):
             for cipher in scan_result.accepted_cipher_list:
@@ -150,7 +153,8 @@ def check( hostname_user_input):
     res["ROBOT"] = str(robot_txt)
     res["HEARTBLEED"] = str(heartbleed_txt)
     res["DROWN"] = str(drown_txt)
-    res["POODLE"] = str(poodle_txt)   
+    res["POODLE"] = str(poodle_txt)
+    res["BEAST"] = str(beast_txt)
     res["WEAKCIPHERS"] = 'Not vulnerable' if len(weak_ciphers) == 0 else '\n'.join(str(s) for s in weak_ciphers)
     return res
 

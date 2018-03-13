@@ -34,11 +34,14 @@ poodledesc += " For more information visit https://www.us-cert.gov/ncas/alerts/T
 weakciphersdesc = "In order to secure data that is being transferred, TLS/SSL makes use of one or more cipher suites. A cipher suite is a combination of authentication, encryption and message authentication code (MAC) algorithms. All of which are used during the negotiation of security settings for a TLS/SSL connection as well as for the secure transfer of data."
 weakciphersdesc += " For more information visit https://www.acunetix.com/blog/articles/tls-ssl-cipher-hardening/"
 
+beastdesc = "The BEAST vulnerability exploits a flaw in TLS Version 1.0. "
+
 descriptions["ROBOT"] = robotdesc
 descriptions["HEARTBLEED"] = heartbleeddesc
 descriptions["DROWN"] = drowndesc
 descriptions["POODLE"] = poodledesc
 descriptions["WEAKCIPHERS"] = weakciphersdesc
+descriptions["BEAST"] = beastdesc
 
 class ResultView(TemplateView):
     global results
