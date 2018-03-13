@@ -7,6 +7,7 @@ from sslyze.concurrent_scanner import ConcurrentScanner, PluginRaisedExceptionSc
 from sslyze.plugins.robot_plugin import RobotScanCommand, RobotScanResultEnum
 from sslyze.plugins.heartbleed_plugin import HeartbleedScanCommand
 from sslyze.plugins.openssl_cipher_suites_plugin import Sslv20ScanCommand, Sslv30ScanCommand
+from sslyze.plugins.compression_plugin import CompressionScanCommand
 # own imports
 
 def check( hostname_user_input):
@@ -51,6 +52,7 @@ def check( hostname_user_input):
     concurrent_scanner.queue_scan_command(server_info, Tlsv11ScanCommand())
     concurrent_scanner.queue_scan_command(server_info, Tlsv12ScanCommand())
     concurrent_scanner.queue_scan_command(server_info, Tlsv13ScanCommand())
+    concurrent_scanner.queue_scan_command(server_info, CompressionScanCommand())
     
     # Lucky13 (optional)
 
@@ -61,6 +63,7 @@ def check( hostname_user_input):
     drown_txt = None
     poodle_txt = None
     beast_txt = None
+    compression_text = None
     potential_weak_ciphers = set()
     print(u'\nProcessing results...')
     for scan_result in concurrent_scanner.get_results():
@@ -88,6 +91,13 @@ def check( hostname_user_input):
 
             elif result_enum == RobotScanResultEnum.UNKNOWN_INCONSISTENT_RESULTS:
                 robot_txt = 'Uknown - Received inconsistent results'
+
+        elif isinstance(scan_result.scan_command, CompressionScanCommand):
+            compression_text = "Vulnerable"
+            result_compression = scan_result.compression_name
+            #print("Offered Compressions: "+str(result_compression))
+            if "None" == str(result_compression):
+                compression_text = "Not vulnerable"
 
         # Process Heartbleed    
         elif isinstance(scan_result.scan_command, HeartbleedScanCommand):
@@ -156,6 +166,7 @@ def check( hostname_user_input):
     res["POODLE"] = str(poodle_txt)
     res["BEAST"] = str(beast_txt)
     res["WEAKCIPHERS"] = 'Not vulnerable' if len(weak_ciphers) == 0 else '\n'.join(str(s) for s in weak_ciphers)
+    res["CRIME"] = str(compression_text)
     return res
 
 

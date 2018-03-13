@@ -36,12 +36,17 @@ weakciphersdesc += " For more information visit https://www.acunetix.com/blog/ar
 
 beastdesc = "The BEAST vulnerability exploits a flaw in TLS Version 1.0. "
 
+crimedesc = "CRIME (Compression Ratio Info-leak Made Easy) is a vulnerability in compressed HTTPS. "
+crimedesc += "is a security exploit against secret web cookies over connections using the HTTPS and SPDY protocols that also use data compression. "
+crimedesc += "When used to recover the content of secret authentication cookies, it allows an attacker to perform session hijacking on an authenticated web session, allowing the launching of further attacks."
+
 descriptions["ROBOT"] = robotdesc
 descriptions["HEARTBLEED"] = heartbleeddesc
 descriptions["DROWN"] = drowndesc
 descriptions["POODLE"] = poodledesc
 descriptions["WEAKCIPHERS"] = weakciphersdesc
 descriptions["BEAST"] = beastdesc
+descriptions["CRIME"] = crimedesc
 
 class ResultView(TemplateView):
     global results
