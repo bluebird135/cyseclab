@@ -31,13 +31,14 @@ poodledesc = "The POODLE attack (which stands for Padding Oracle On Downgraded L
 poodledesc += " If attackers successfully exploit this vulnerability, on average, they only need to make 256 SSL 3.0 requests to reveal one byte of encrypted messages."
 poodledesc += " For more information visit https://www.us-cert.gov/ncas/alerts/TA14-290A"
 
-weakciphersdesc = "In order to secure data that is being transferred, TLS/SSL makes use of one or more cipher suites. A cipher suite is a combination of authentication, encryption and message authentication code (MAC) algorithms. All of which are used during the negotiation of security settings for a TLS/SSL connection as well as for the secure transfer of data."
+weakciphersdesc = "In order to secure data that is being transferred, TLS/SSL makes use of one or more cipher suites. A cipher suite is a combination of authentication, encryption and message authentication code (MAC) algorithms, all of which are used during the negotiation of security settings for a TLS/SSL connection and the secure transfer of data."
 weakciphersdesc += " For more information visit https://www.acunetix.com/blog/articles/tls-ssl-cipher-hardening/"
 
-beastdesc = "The BEAST vulnerability exploits a flaw in TLS Version 1.0. "
+beastdesc = "The BEAST (Browser Exploit Against SSL/TLS) vulnerability exploits a flaw in TLS 1.0."
+beastdesc += " It uses a weakness in cipher block chaining (CBC) that enables a man-in-the-middle attack to obtain and decrypt authentication tokens."
 
 crimedesc = "CRIME (Compression Ratio Info-leak Made Easy) is a vulnerability in compressed HTTPS. "
-crimedesc += "is a security exploit against secret web cookies over connections using the HTTPS and SPDY protocols that also use data compression. "
+crimedesc += "It is a security exploit against secret web cookies over connections using the HTTPS and SPDY protocols that also use data compression. "
 crimedesc += "When used to recover the content of secret authentication cookies, it allows an attacker to perform session hijacking on an authenticated web session, allowing the launching of further attacks."
 
 descriptions["ROBOT"] = robotdesc
