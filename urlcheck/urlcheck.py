@@ -175,7 +175,10 @@ def check( hostname_user_input):
     res["BEAST"] = str(beast_txt)
     res["WEAKCIPHERS"] = 'Not vulnerable' if len(weak_ciphers) == 0 else '\n'.join(str(s) for s in weak_ciphers)
     res["CRIME"] = str(compression_text)
-    return res
+
+
+    details = getCertiDetails(hostname_user_input, potential_weak_ciphers)
+    return (res, details)
 
 
 # TODO Order by appearance in cipher_suite_name for better performance
@@ -204,7 +207,7 @@ def getWeakCiphers(pot_weak_ciphers):
     return weak_ciphers
 
 
-def getCertiDetails(url):
+def getCertiDetails(url, cipherlist):
     details = dict()
 
     try:
@@ -239,4 +242,5 @@ def getCertiDetails(url):
     details["Signature Hash Algorithm"] = str(sig.name.upper() + " | Digest size: " + str(sig.digest_size) + " | Block size: " + str(sig.block_size))
     #details["Signature Algorithm OID"] = str(cert.signature_algorithm_oid)
 
+    details["Cipher Suite"] = '\n'.join(str(s) for s in cipherlist)
     return details

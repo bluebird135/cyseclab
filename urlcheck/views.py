@@ -70,8 +70,7 @@ class ResultView(TemplateView):
         print("In Post")
         url = request.POST.get('textfield', None)
         try:
-            results = urlcheck.check(url)
-            certiDetails = urlcheck.getCertiDetails(url)
+            results, certiDetails = urlcheck.check(url)
         except Exception as e:
             import traceback
             print('Exception occured! '+str(e)+'\n')
