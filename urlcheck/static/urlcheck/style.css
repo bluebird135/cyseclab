@@ -58,12 +58,12 @@ h1 a:visited{
 	border: 3px solid #ddd;
 }
 
-.table tr {
+.clickAble {
 	cursor: pointer;
 }
 
-.clickAble {
-	cursor: pointer;
+.autoCursor {
+	cursor: auto;
 }
 
 #check_button {
@@ -80,4 +80,8 @@ h1 a:visited{
 
 .thead {
 	background-color: #f5f5f5;
+}
+
+.lineBreak {
+	white-space: pre-line;
 }

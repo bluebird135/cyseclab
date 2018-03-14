@@ -71,6 +71,7 @@ class ResultView(TemplateView):
         url = request.POST.get('textfield', None)
         try:
             results = urlcheck.check(url)
+            certiDetails = urlcheck.getCertiDetails(url)
         except Exception as e:
             import traceback
             print('Exception occured! '+str(e)+'\n')
@@ -84,5 +85,9 @@ class ResultView(TemplateView):
         for attack in results.keys():
             resultList.append([attack, results[attack], descriptions[attack]])
 
-        context_dict = {'resultList': resultList, 'hostURL': url}
+        certiData = []
+        for header in certiDetails.keys():
+            certiData.append([header, certiDetails[header]])
+
+        context_dict = {'resultList': resultList, 'hostURL': url, 'certiData': certiData}
         return render(request, 'base.html', context_dict)

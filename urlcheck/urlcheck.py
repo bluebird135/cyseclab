@@ -8,6 +8,14 @@ from sslyze.plugins.robot_plugin import RobotScanCommand, RobotScanResultEnum
 from sslyze.plugins.heartbleed_plugin import HeartbleedScanCommand
 from sslyze.plugins.openssl_cipher_suites_plugin import Sslv20ScanCommand, Sslv30ScanCommand
 from sslyze.plugins.compression_plugin import CompressionScanCommand
+
+import ssl
+from cryptography import x509
+from cryptography.hazmat.backends import default_backend
+from cryptography.hazmat.primitives import serialization
+from cryptography.hazmat.primitives import hashes
+from cryptography.x509 import NameOID
+from binascii import hexlify
 # own imports
 
 def check( hostname_user_input):
@@ -195,3 +203,40 @@ def getWeakCiphers(pot_weak_ciphers):
             weak_ciphers.add(cipher)
     return weak_ciphers
 
+
+def getCertiDetails(url):
+    details = dict()
+
+    try:
+        pem = ssl.get_server_certificate((url, 443))
+        cert = x509.load_pem_x509_certificate(pem.encode('ascii'), default_backend())
+    except:
+        raise RuntimeError(u'Could not retrieve certificate details from {}: {}!'.format(hostname_user_input, e.error_msg))
+
+    details["Common Name"] = cert.subject.get_attributes_for_oid(NameOID.COMMON_NAME)[0].value
+    details["Version"] = str(cert.version)
+    details["Serial Number"] = str('{:x}'.format(cert.serial_number)).upper()
+
+    issuer = "Common Name: " + cert.issuer.get_attributes_for_oid(NameOID.COMMON_NAME)[0].value + "\n"
+    issuer += "Organization Name: " + cert.issuer.get_attributes_for_oid(NameOID.ORGANIZATION_NAME)[0].value + "\n"
+    issuer += "Country Name: " + cert.issuer.get_attributes_for_oid(NameOID.COUNTRY_NAME)[0].value + "\n"
+    details["Issuer"] = str(issuer)
+
+    subject = "Common Name: " + cert.subject.get_attributes_for_oid(NameOID.COMMON_NAME)[0].value + "\n"
+    subject += "Organization Name: " + cert.subject.get_attributes_for_oid(NameOID.ORGANIZATION_NAME)[0].value + "\n"
+    subject += "Country Name: " + cert.subject.get_attributes_for_oid(NameOID.COUNTRY_NAME)[0].value + "\n"
+    subject += "State or Province: " + cert.subject.get_attributes_for_oid(NameOID.STATE_OR_PROVINCE_NAME)[0].value + "\n"
+    subject += "Locality: " + cert.subject.get_attributes_for_oid(NameOID.LOCALITY_NAME)[0].value + "\n"
+    details["Subject"] = subject
+
+    details["Not valid before"] = str(cert.not_valid_before)
+    details["Not valid after"] = str(cert.not_valid_after)
+    details["Public Key Info"] = str(type(cert.public_key()).__name__[1:] + " | Key size: "+ (str(cert.public_key().key_size) + " Bit"))
+    details["Fingerprint (SHA-256)"] = str(hexlify(cert.fingerprint(hashes.SHA256())))[2:-1].upper()
+    details["Fingerprint (SHA 1)"] = str(hexlify(cert.fingerprint(hashes.SHA1())))[2:-1].upper()
+
+    sig = cert.signature_hash_algorithm
+    details["Signature Hash Algorithm"] = str(sig.name.upper() + " | Digest size: " + str(sig.digest_size) + " | Block size: " + str(sig.block_size))
+    #details["Signature Algorithm OID"] = str(cert.signature_algorithm_oid)
+
+    return details

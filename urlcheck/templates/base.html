@@ -9,7 +9,22 @@
 			</h4>
 		</div>
 		<div id="collapse2" class="panel-collapse collapse">
-			<img src="https://data.whicdn.com/images/168870788/large.jpg" style="display:block;margin:auto">
+			<table class="table">
+				<thead class="thead">
+					<tr>
+						<th scope="col">Header</th>
+						<th scope="col">Detail</th>
+					</tr>
+				</thead>
+				<tbody class="autoCursor">
+					{% for i in certiData %}
+					<tr>
+						<th scope="row">{{i.0}}</th>
+						<td class="lineBreak">{{i.1}}</td>
+					</tr>
+					{% endfor %}
+				</tbody>
+			</table>
 		</div>
 	</div>
 </div> 
@@ -27,7 +42,7 @@
 		</thead>
 		<tbody>
 			{% for i in resultList %}
-			<tr data-toggle="collapse" data-target="#{{i.0}}" class="accordion-toggle">
+			<tr data-toggle="collapse" data-target="#{{i.0}}" class="accordion-toggle clickAble">
 				<th scope="row">{{i.0}}</th>
 				<td>{{i.1}}</td>
 				{% if i.1 == "Not vulnerable" %}
