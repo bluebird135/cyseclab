@@ -31,3 +31,6 @@ Im "/cyseclab" Verzeichnis venv ausführen
 
 Testserver starten (zmd. bis an Apache angebunden)
 ```python manage.py runserver```
+
+### Fraunhofer SIT VM
+```Damit die Produktivumgebung den github Stand akzepiert muss man in der index.html in der POST Methode die URL von /checkurl/ auf /cyseclab/checkurl/ setzen```
