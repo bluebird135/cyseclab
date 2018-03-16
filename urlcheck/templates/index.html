@@ -26,7 +26,7 @@
 	<div class="container">
 		<h1 class="centeredText"><a href="/">{% block title %}SSLCHECKER{% endblock %}</a></h1>
 		
-		<form action="/cyseclab/checkurl/" method="post" class="form centeredText">
+		<form action="/checkurl/" method="post" class="form centeredText">
 			{% csrf_token %}
 			
 			<input id="urlInput" type="text" name="textfield">
