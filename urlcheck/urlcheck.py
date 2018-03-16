@@ -233,11 +233,11 @@ def getCertiDetails(url, cipherlist):
     issuer += "Country Name: " + cert.issuer.get_attributes_for_oid(NameOID.COUNTRY_NAME)[0].value + "\n"
     details["Issuer"] = str(issuer)
 
-    subject = "Common Name: " + cert.subject.get_attributes_for_oid(NameOID.COMMON_NAME)[0].value + "\n"
-    subject += "Organization Name: " + cert.subject.get_attributes_for_oid(NameOID.ORGANIZATION_NAME)[0].value + "\n"
-    subject += "Country Name: " + cert.subject.get_attributes_for_oid(NameOID.COUNTRY_NAME)[0].value + "\n"
-    subject += "State or Province: " + cert.subject.get_attributes_for_oid(NameOID.STATE_OR_PROVINCE_NAME)[0].value + "\n"
-    subject += "Locality: " + cert.subject.get_attributes_for_oid(NameOID.LOCALITY_NAME)[0].value + "\n"
+    subject = "Common Name: " + getCertiAttribute(cert, NameOID.COMMON_NAME) + "\n"
+    subject += "Organization Name: " + getCertiAttribute(cert, NameOID.ORGANIZATION_NAME) + "\n"
+    subject += "Country Name: " + getCertiAttribute(cert, NameOID.COUNTRY_NAME) + "\n"
+    subject += "State or Province: " + getCertiAttribute(cert, NameOID.STATE_OR_PROVINCE_NAME) + "\n"
+    subject += "Locality: " + getCertiAttribute(cert, NameOID.LOCALITY_NAME) + "\n"
     details["Subject"] = subject
 
     details["Not valid before"] = str(cert.not_valid_before)
@@ -252,3 +252,9 @@ def getCertiDetails(url, cipherlist):
 
     details["Cipher Suite"] = '\n'.join(str(s) for s in cipherlist)
     return details
+
+# Returns the specified attribute, or "(none)" if the attribute does not exist
+def getCertiAttribute(cert, att):
+    if len(cert.subject.get_attributes_for_oid(att)) > 0:
+        return cert.subject.get_attributes_for_oid(att)[0].value
+    return "(none)"
