@@ -52,5 +52,5 @@ These are the attacks that are checked against:
 * DROWN
 * Detecting deprecated or weak ciphers
 
-For a more detailed description, see [[Attacks]]
+For a more detailed description, see [Attacks](https://github.com/bluebird135/cyseclab/wiki/Attacks)
 
