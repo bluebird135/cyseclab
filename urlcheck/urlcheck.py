@@ -24,10 +24,12 @@ def check( hostname_user_input):
         print(u'hostname_user_input: '+hostname_user_input)
 
         # Strip http(s)
-        m = re.search('(https?://)?(.*)', hostname_user_input)
+        m = re.search('^(https?://)?(.*?)(/)?$', hostname_user_input)
+        hostname_user_input = m.group(2)
         if m.group(1) != None:
-            hostname_user_input = m.group(2)
             print(u'Stripped '+m.group(1))
+        if m.group(3) != None:
+            print(u'Stripped trailing '+m.group(3))
 
         server_info = ServerConnectivityInfo(hostname=hostname_user_input) #u'google.com'
         server_info.test_connectivity_to_server(network_timeout=10)
