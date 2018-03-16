@@ -17,10 +17,18 @@ from cryptography.hazmat.primitives import hashes
 from cryptography.x509 import NameOID
 from binascii import hexlify
 # own imports
+import re
 
 def check( hostname_user_input):
     try:
         print(u'hostname_user_input: '+hostname_user_input)
+
+        # Strip http(s)
+        m = re.search('(https?://)?(.*)', hostname_user_input)
+        if m.group(1) != None:
+            hostname_user_input = m.group(2)
+            print(u'Stripped '+m.group(1))
+
         server_info = ServerConnectivityInfo(hostname=hostname_user_input) #u'google.com'
         server_info.test_connectivity_to_server(network_timeout=10)
     except ServerConnectivityError as e:
