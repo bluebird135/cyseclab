@@ -44,13 +44,13 @@ python manage.py runserver
 
 ## Attacks
 These are the attacks that are checked against:
-ROBOT
-Heartbleed
-BEAST
-CRIME
-POODLE
-DROWN
-Detecting deprecated or weak ciphers
+* ROBOT
+* Heartbleed
+* BEAST
+* CRIME
+* POODLE
+* DROWN
+* Detecting deprecated or weak ciphers
 
 For a more detailed description, see [[Attacks]]
 
