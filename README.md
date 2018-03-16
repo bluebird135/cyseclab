@@ -1,36 +1,56 @@
 # Cyseclab
-## Setting up Django
-### Tools & Packages
-python3 --version    //Python 3.6.3
+## Description
+This project is a website that checks a given URL's SSL certificate for vulnerabilities against certain attacks. It was created for the Cybersecurity lab on the TU Darmstadt in WS1017/18 and is written in Python.
 
-pip3 --version       //pip 9.0.1
+## Requirements
+The project requires the following:\
+**Python** >3.0.0\
+**pip** for python3\
+**Django** >2.0.0\
+**virtualenv** (optional)
 
-Django               //v. 2.0.3
+## Introductory reading
+If you are new to Django, the following articles may prove helpful in understanding the Django project structure:
 
-### Setup
-Basic Guide unter https://medium.com/@djstein/modern-django-part-0-introduction-and-initial-setup-657df48f08f8
-Guides die die Projektsturktur und Django Komponenten erklären:
-https://djangoforbeginners.com/hello-world/
-https://docs.djangoproject.com/en/2.0/intro/tutorial01/
+[How To Install Django and Set Up a Development Environment on Ubuntu 16.04](https://www.digitalocean.com/community/tutorials/how-to-install-django-and-set-up-a-development-environment-on-ubuntu-16-04)\
+[A Complete Beginner's Guide to Django](https://simpleisbetterthancomplex.com/series/beginners-guide/1.11/)\
+[Using Git with Django](https://jeffknupp.com/blog/2012/02/07/using-git-with-django/)
 
-#### 1. Im "/cyseclab" Verzeichnis venv aufsetzten
-```virtualenv -p python3 venv```
 
-Per default wird das Verzeichnis von der .gitignore ignoriert also bei jedem neuem clonen einmal ausfuehren.
+## Setup
+### Setting up virtualenv
+#### Set up virtual environment in the _cyseclab_ folder
+```
+cd cyseclab
+virtualenv -p python3 venv
+```
 
-#### 2. Django im venv installieren
-Activate the virtualenv venv
-```source venv/bin/activate```
+#### Activate the virtual environment
+```
+source venv/bin/activate
+```
 
-Install Django via pip installing all dependencies in requirements.txt
-```pip install -Ur requirements.txt```
+#### Install requirements in the virtual environment
+```
+pip install -Ur requirements.txt
+```
 
-### Ausführen
-Im "/cyseclab" Verzeichnis venv ausführen
-```source venv/bin/activate```
+### Starting Django
+Django can be started with the following commands. If you use virtualenv, be sure that the virtual environment is active.
+```
+cd cyseclab
+python manage.py runserver
+```
 
-Testserver starten (zmd. bis an Apache angebunden)
-```python manage.py runserver```
+## Attacks
+These are the attacks that are checked against:
+ROBOT
+Heartbleed
+BEAST
+CRIME
+POODLE
+DROWN
+Detecting deprecated or weak ciphers
 
-### Fraunhofer SIT VM
-```Damit die Produktivumgebung den github Stand akzepiert muss man in der index.html in der POST Methode die URL von /checkurl/ auf /cyseclab/checkurl/ setzen```
+For a more detailed description, see [[Attacks]]
+
