@@ -1,6 +1,6 @@
 # Cyseclab
 ## Description
-This project is a website that checks a given URL's SSL certificate for vulnerabilities against certain attacks. It was created for the Cybersecurity lab on the TU Darmstadt in WS1017/18 and is written in Python.
+This project is a website that checks a given URL's SSL certificate for vulnerabilities to certain attacks by executing and examining the information from a SSL/TLS handshake or probing the server with specifically designed payloads. It was created for the Cybersecurity lab on the TU Darmstadt in WS1017/18 and is written in Python.
 
 ## Requirements
 The project requires the following:\
