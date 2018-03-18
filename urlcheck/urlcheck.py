@@ -178,13 +178,13 @@ def check( hostname_user_input):
     
     res = dict()
     #res["host"] = str(hostname_user_input)
-    res["ROBOT"] = str(robot_txt)
-    res["HEARTBLEED"] = str(heartbleed_txt)
-    res["DROWN"] = str(drown_txt)
-    res["POODLE"] = str(poodle_txt)
-    res["BEAST"] = str(beast_txt)
-    res["WEAKCIPHERS"] = 'Not vulnerable' if len(weak_ciphers) == 0 else '\n'.join(str(s) for s in weak_ciphers)
+    res["BEAST"] = str(beast_txt)    
     res["CRIME"] = str(compression_text)
+    res["DROWN"] = str(drown_txt)
+    res["HEARTBLEED"] = str(heartbleed_txt)
+    res["POODLE"] = str(poodle_txt)
+    res["ROBOT"] = str(robot_txt)
+    res["WEAKCIPHERS"] = 'Not vulnerable' if len(weak_ciphers) == 0 else '\n'.join(str(s) for s in weak_ciphers)
 
 
     details = getCertiDetails(hostname_user_input, potential_weak_ciphers)
@@ -224,7 +224,7 @@ def getCertiDetails(url, cipherlist):
         pem = ssl.get_server_certificate((url, 443))
         cert = x509.load_pem_x509_certificate(pem.encode('ascii'), default_backend())
     except:
-        raise RuntimeError(u'Could not retrieve certificate details from {}: {}!'.format(hostname_user_input, e.error_msg))
+        raise RuntimeError(u'Could not retrieve certificate details from {}: {}!'.format(url, e.error_msg))
 
     details["Common Name"] = cert.subject.get_attributes_for_oid(NameOID.COMMON_NAME)[0].value
     details["Version"] = str(cert.version)
