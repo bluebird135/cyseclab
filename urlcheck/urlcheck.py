@@ -78,12 +78,12 @@ def check( hostname_user_input):
 
 
     # Process the results
-    robot_txt = None
-    heartbleed_txt = None
-    drown_txt = None
-    poodle_txt = None
-    beast_txt = None
-    compression_text = None
+    robot_txt = 'Scan could not be executed'
+    heartbleed_txt = 'Scan could not be executed'
+    drown_txt = 'Scan could not be executed'
+    poodle_txt = 'Scan could not be executed'
+    beast_txt = 'Scan could not be executed'
+    compression_text = 'Scan could not be executed'
     potential_weak_ciphers = set()
     print(u'\nProcessing results...')
     for scan_result in concurrent_scanner.get_results():
@@ -225,8 +225,10 @@ def getCertiDetails(url, cipherlist):
     try:
         pem = ssl.get_server_certificate((url, 443))
         cert = x509.load_pem_x509_certificate(pem.encode('ascii'), default_backend())
+    except Exception as e:
+        raise RuntimeError(u'Could not retrieve certificate details from {}: {}!'.format(url, str(e)))
     except:
-        raise RuntimeError(u'Could not retrieve certificate details from {}: {}!'.format(url, e.error_msg))
+        raise RuntimeError(u'Could not retrieve certificate details from {}!'.format(url))
 
     details["Common Name"] = cert.subject.get_attributes_for_oid(NameOID.COMMON_NAME)[0].value
     details["Version"] = str(cert.version)
