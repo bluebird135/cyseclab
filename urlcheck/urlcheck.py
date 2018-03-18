@@ -26,6 +26,8 @@ def check( hostname_user_input):
         # Strip http(s)
         m = re.search('^(https?://)?(.*?)(/)?$', hostname_user_input)
         hostname_user_input = m.group(2)
+        if not hostname_user_input:
+            raise RuntimeError(u'Please provide non-empty host name!')
         if m.group(1) != None:
             print(u'Stripped '+m.group(1))
         if m.group(3) != None:
