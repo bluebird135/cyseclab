@@ -41,6 +41,9 @@ crimedesc = "CRIME (Compression Ratio Info-leak Made Easy) is a vulnerability in
 crimedesc += "It is a security exploit against secret web cookies over connections using the HTTPS and SPDY protocols that also use data compression. "
 crimedesc += "When used to recover the content of secret authentication cookies, it allows an attacker to perform session hijacking on an authenticated web session, allowing the launching of further attacks."
 
+luckydesc = "The Lucky Thirteen attack exploits a vulnerability in the TLS versions 1.1 and 1.2. It's a timing attack that is applicable due to a flaw in the TLS specification."
+luckydesc += "The vulnerability allows a Man-in-the-Middle attacker to recover plaintext from a TLS connection that uses CBC-mode encryption."
+
 descriptions["ROBOT"] = robotdesc
 descriptions["HEARTBLEED"] = heartbleeddesc
 descriptions["DROWN"] = drowndesc
@@ -48,6 +51,7 @@ descriptions["POODLE"] = poodledesc
 descriptions["WEAKCIPHERS"] = weakciphersdesc
 descriptions["BEAST"] = beastdesc
 descriptions["CRIME"] = crimedesc
+descriptions["LUCKY13"] = luckydesc
 
 class ResultView(TemplateView):
     global results

@@ -84,6 +84,7 @@ def check( hostname_user_input):
     poodle_txt = 'Scan could not be executed'
     beast_txt = 'Scan could not be executed'
     compression_text = 'Scan could not be executed'
+    lucky_text = 'Scan could not be executed'
     potential_weak_ciphers = set()
     print(u'\nProcessing results...')
     for scan_result in concurrent_scanner.get_results():
@@ -157,12 +158,20 @@ def check( hostname_user_input):
                 beast_txt = "Vulnerable"
 
         elif isinstance(scan_result.scan_command, Tlsv11ScanCommand):
+            if lucky_text != 'Vulnerable':
+                lucky_text = 'Not vulnerable'
             for cipher in scan_result.accepted_cipher_list:
                 potential_weak_ciphers.add(cipher.name)
+                if 'CBC' in cipher.name:
+                    lucky_text = 'Vulnerable'
 
         elif isinstance(scan_result.scan_command, Tlsv12ScanCommand):
+            if lucky_text != 'Vulnerable':
+                lucky_text = 'Not vulnerable'
             for cipher in scan_result.accepted_cipher_list:
                 potential_weak_ciphers.add(cipher.name)
+                if 'CBC' in cipher.name:
+                    lucky_text = 'Vulnerable'
 
         elif isinstance(scan_result.scan_command, Tlsv13ScanCommand):
             for cipher in scan_result.accepted_cipher_list:
@@ -184,6 +193,7 @@ def check( hostname_user_input):
     res["CRIME"] = str(compression_text)
     res["DROWN"] = str(drown_txt)
     res["HEARTBLEED"] = str(heartbleed_txt)
+    res["LUCKY13"] = str(lucky_text)
     res["POODLE"] = str(poodle_txt)
     res["ROBOT"] = str(robot_txt)
     res["WEAKCIPHERS"] = 'Not vulnerable' if len(weak_ciphers) == 0 else '\n'.join(str(s) for s in weak_ciphers)
