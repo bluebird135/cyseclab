@@ -17,6 +17,7 @@ from cryptography.hazmat.primitives import hashes
 from cryptography.x509 import NameOID
 from binascii import hexlify
 # own imports
+import collections
 import re
 
 def check( hostname_user_input):
@@ -187,9 +188,8 @@ def check( hostname_user_input):
     print(weak_ciphers)
 
     
-    res = dict()
-    #res["host"] = str(hostname_user_input)
-    res["BEAST"] = str(beast_txt)    
+    res = collections.OrderedDict()
+    res["BEAST"] = str(beast_txt)
     res["CRIME"] = str(compression_text)
     res["DROWN"] = str(drown_txt)
     res["HEARTBLEED"] = str(heartbleed_txt)
@@ -230,7 +230,7 @@ def getWeakCiphers(pot_weak_ciphers):
 
 
 def getCertiDetails(url, cipherlist):
-    details = dict()
+    details = collections.OrderedDict()
 
     try:
         pem = ssl.get_server_certificate((url, 443))

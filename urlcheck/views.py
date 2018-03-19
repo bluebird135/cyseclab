@@ -6,13 +6,15 @@ from django.views.generic.base import TemplateView
 from django.contrib import messages
 from django.shortcuts import redirect
 
+import collections
+
 # Sslyze check
 from . import urlcheck
 
 class IndexView(TemplateView):
     template_name = 'index.html'
 
-results = dict()
+results = collections.OrderedDict()
 descriptions = dict()
 robotdesc = "The Return Of Bleichenbacher's Oracle Threat, or ROBOT for short, is a vulnerability that allows performing RSA decryption and signing operations with the private key of a TLS server. "
 robotdesc += "In 1998, Daniel Bleichenbacher discovered that the error messages given by SSL servers for errors in the PKCS #1 v1.5 padding allowed an adaptive-chosen ciphertext attack; "
@@ -85,12 +87,12 @@ class ResultView(TemplateView):
         context = super(ResultView, self).get_context_data()
 
         resultList = []
-        for attack in results.keys():
-            resultList.append([attack, results[attack], descriptions[attack]])
+        for name, result in results.items():
+            resultList.append([name, result, descriptions[name]])
 
         certiData = []
-        for header in certiDetails.keys():
-            certiData.append([header, certiDetails[header]])
+        for header, details in certiDetails.items():
+            certiData.append([header, details])
 
         context_dict = {'resultList': resultList, 'hostURL': url, 'certiData': certiData}
         return render(request, 'base.html', context_dict)
