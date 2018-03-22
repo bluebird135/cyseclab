@@ -139,6 +139,7 @@ def check( hostname_user_input):
                 potential_weak_ciphers.add(cipher.name)
                 if 'CBC' in cipher.name:
                     poodle_txt = 'Vulnerable'
+                    beast_txt = "Not mitigated on server-side"
                                
         
         # Process DROWN (a server is vulnerable to DROWN if it allows SSLv2 connections) Ref = https://drownattack.com/
@@ -147,6 +148,8 @@ def check( hostname_user_input):
             for cipher in scan_result.accepted_cipher_list:
                 potential_weak_ciphers.add(cipher.name)
                 drown_txt = 'Vulnerable'
+                if 'CBC' in cipher.name:
+                    beast_txt = "Not mitigated on server-side"
 
                 
         # Collect deprecated/weak ciphers - NEED TO COMBINE WITH POODLE/DROWN/...
@@ -156,7 +159,8 @@ def check( hostname_user_input):
             beast_txt = "Not vulnerable"
             for cipher in scan_result.accepted_cipher_list:
                 potential_weak_ciphers.add(cipher.name)
-                beast_txt = "Vulnerable"
+                if 'CBC' in cipher.name:
+                    beast_txt = "Not mitigated on server-side"
 
         elif isinstance(scan_result.scan_command, Tlsv11ScanCommand):
             if lucky_text != 'Vulnerable':
