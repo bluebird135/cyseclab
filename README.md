@@ -54,3 +54,13 @@ These are the attacks that are checked against:
 
 For a more detailed description, see [Attacks](https://github.com/bluebird135/cyseclab/wiki/Attacks)
 
+## Used Libraries
+SSLyze
+```
+https://github.com/nabla-c0d3/sslyze
+```
+
+Pyca/cryptography
+```
+https://github.com/pyca/cryptography
+```
