@@ -1,7 +1,8 @@
 # ssllyze imports
 from __future__ import absolute_import
 from __future__ import unicode_literals
-from sslyze.server_connectivity import ServerConnectivityInfo, ServerConnectivityError
+from sslyze.server_connectivity_info import ServerConnectivityInfo
+from sslyze.server_connectivity_tester import ServerConnectivityTester, ServerConnectivityError
 from sslyze.plugins.openssl_cipher_suites_plugin import Tlsv10ScanCommand, Tlsv11ScanCommand, Tlsv12ScanCommand, Tlsv13ScanCommand
 from sslyze.concurrent_scanner import ConcurrentScanner, PluginRaisedExceptionScanResult
 from sslyze.plugins.robot_plugin import RobotScanCommand, RobotScanResultEnum
@@ -34,8 +35,8 @@ def check( hostname_user_input):
         if m.group(3) != None:
             print(u'Stripped trailing '+m.group(3))
 
-        server_info = ServerConnectivityInfo(hostname=hostname_user_input) #u'google.com'
-        server_info.test_connectivity_to_server(network_timeout=10)
+        server_tester = ServerConnectivityTester(hostname_user_input)
+        server_info = server_tester.perform(network_timeout=10)
     except ServerConnectivityError as e:
     # Could not establish an SSL connection to the server
         print(u'EXCEPTION')
