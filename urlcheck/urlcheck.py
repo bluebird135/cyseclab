@@ -17,6 +17,7 @@ from cryptography.hazmat.primitives import serialization
 from cryptography.hazmat.primitives import hashes
 from cryptography.x509 import NameOID
 from binascii import hexlify
+
 # own imports
 import collections
 import re
@@ -37,10 +38,12 @@ def check( hostname_user_input):
 
         server_tester = ServerConnectivityTester(hostname_user_input)
         server_info = server_tester.perform(network_timeout=10)
-    except ServerConnectivityError as e:
     # Could not establish an SSL connection to the server
-        print(u'EXCEPTION')
+    except ServerConnectivityError as e:
         raise RuntimeError(u'Error when connecting to {}: {}!'.format(hostname_user_input, e.error_msg))
+    # No SSL used
+    except IOError as e:
+        raise RuntimeError(u'Protocol does not use SSL/TLS!')
     
     # If the call to test_connectivity_to_server() returns successfully, the server_info is then ready to be used for scanning the server.
     
@@ -57,16 +60,6 @@ def check( hostname_user_input):
     # Heartbleed
     concurrent_scanner.queue_scan_command(server_info, HeartbleedScanCommand())
     
-    # BEAST
-    
-    # BREACH
-    
-    # POODLE
-    # concurrent_scanner.queue_scan_command(server_info, Sslv30ScanCommand()) -> redundant
-    
-    # DROWN
-    # concurrent_scanner.queue_scan_command(server_info, Sslv20ScanCommand()) -> redundant
-    
     # Detecting deprecated/weak ciphers
     concurrent_scanner.queue_scan_command(server_info, Sslv20ScanCommand())
     concurrent_scanner.queue_scan_command(server_info, Sslv30ScanCommand())
@@ -75,9 +68,6 @@ def check( hostname_user_input):
     concurrent_scanner.queue_scan_command(server_info, Tlsv12ScanCommand())
     concurrent_scanner.queue_scan_command(server_info, Tlsv13ScanCommand())
     concurrent_scanner.queue_scan_command(server_info, CompressionScanCommand())
-    
-    # Lucky13 (optional)
-
 
     # Process the results
     robot_txt = 'Scan could not be executed'
@@ -88,16 +78,16 @@ def check( hostname_user_input):
     compression_text = 'Scan could not be executed'
     lucky_text = 'Scan could not be executed'
     potential_weak_ciphers = set()
+
     print(u'\nProcessing results...')
     for scan_result in concurrent_scanner.get_results():
-    # Sometimes a scan command can unexpectedly fail (as a bug); it is returned as a PluginRaisedExceptionResult
+        # Sometimes a scan command can unexpectedly fail (as a bug); it is returned as a PluginRaisedExceptionResult
         if isinstance(scan_result, PluginRaisedExceptionScanResult):
-            continue
-            raise RuntimeError(u'Scan command failed: {}'.format(scan_result.as_text()))
+            raise RuntimeError(u'Scan command failed: Scan could not be executed!')
             continue
 
-    # Each scan result has attributes with the information you're looking for, specific to each scan command
-    # All these attributes are documented within each scan command's module
+        # Each scan result has attributes with the information you're looking for, specific to each scan command
+        # All these attributes are documented within each scan command's module
         if isinstance(scan_result.scan_command, RobotScanCommand):
             result_enum = scan_result.robot_result_enum
             if result_enum == RobotScanResultEnum.VULNERABLE_STRONG_ORACLE:
@@ -115,10 +105,10 @@ def check( hostname_user_input):
             elif result_enum == RobotScanResultEnum.UNKNOWN_INCONSISTENT_RESULTS:
                 robot_txt = 'Unknown - Received inconsistent results'
 
+        # Process CRIME
         elif isinstance(scan_result.scan_command, CompressionScanCommand):
             compression_text = "Vulnerable"
             result_compression = scan_result.compression_name
-            #print("Offered Compressions: "+str(result_compression))
             if "None" == str(result_compression):
                 compression_text = "Not vulnerable"
 
@@ -129,11 +119,7 @@ def check( hostname_user_input):
             if result_heartbleed == True:
                 heartbleed_txt = 'Vulnerable'
                 
-        # Process BEAST
-        
-        # Process BREACH (BREACH is an instance of the CRIME attack against HTTP compression (the use of gzip or DEFLATE data compression algorithms via the content-encoding option within HTTP)
-        
-        # Process POODLE (a server is vulerable to POOD if it supports SSLv3 with CBC in the list of accepted cipher suites + some TLS Versions which don't enforce padding rules (how to test?-> https://github.com/exploresecurity/test_poodle_tls/blob/master/test_poodle_tls.py)
+        # Process POODLE
         elif isinstance(scan_result.scan_command, Sslv30ScanCommand):
             poodle_txt = 'Not vulnerable'
             for cipher in scan_result.accepted_cipher_list:
@@ -153,9 +139,7 @@ def check( hostname_user_input):
                     beast_txt = "Not mitigated on server-side"
 
                 
-        # Collect deprecated/weak ciphers - NEED TO COMBINE WITH POODLE/DROWN/...
-        # Ref: https://nabla-c0d3.github.io/sslyze/documentation/available-scan-commands.html#module-sslyze.plugins.openssl_cipher_suites_plugin
-                
+        # Collect deprecated/weak ciphers
         elif isinstance(scan_result.scan_command, Tlsv10ScanCommand):
             beast_txt = "Not vulnerable"
             for cipher in scan_result.accepted_cipher_list:
@@ -183,7 +167,6 @@ def check( hostname_user_input):
             for cipher in scan_result.accepted_cipher_list:
                 potential_weak_ciphers.add(cipher.name)
         
-        # Process Lucky13 (optional)
     
     # Process weak ciphers
     weak_ciphers = getWeakCiphers(potential_weak_ciphers)
@@ -208,7 +191,6 @@ def check( hostname_user_input):
     return (res, details)
 
 
-# TODO Order by appearance in cipher_suite_name for better performance
 def getWeakCiphers(pot_weak_ciphers):
     weak_ciphers = set()
     for cipher in pot_weak_ciphers:
