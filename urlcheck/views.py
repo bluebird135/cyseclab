@@ -38,13 +38,16 @@ weakciphersdesc += " For more information visit https://www.acunetix.com/blog/ar
 
 beastdesc = "The BEAST (Browser Exploit Against SSL/TLS) vulnerability exploits a flaw in TLS 1.0."
 beastdesc += " It uses a weakness in cipher block chaining (CBC) that enables a man-in-the-middle attack to obtain and decrypt authentication tokens."
+beastdesc += " For more information vist https://blog.qualys.com/ssllabs/2013/09/10/is-beast-still-a-threat and read \"Here Come The ⊕ Ninjas\" by Thai Duong & Juliano Rizzo. May 13, 2011. http://nerdoholic.org/uploads/dergln/beast_part2/ssl_jun21.pdf"
 
 crimedesc = "CRIME (Compression Ratio Info-leak Made Easy) is a vulnerability in compressed HTTPS. "
 crimedesc += "It is a security exploit against secret web cookies over connections using the HTTPS and SPDY protocols that also use data compression. "
 crimedesc += "When used to recover the content of secret authentication cookies, it allows an attacker to perform session hijacking on an authenticated web session, allowing the launching of further attacks."
+crimedesc += " For more information visit https://media.blackhat.com/eu-13/briefings/Beery/bh-eu-13-a-perfect-crime-beery-wp.pdf"
 
 luckydesc = "The Lucky Thirteen attack exploits a vulnerability in the TLS versions 1.1 and 1.2. It's a timing attack that is applicable due to a flaw in the TLS specification."
 luckydesc += "The vulnerability allows a Man-in-the-Middle attacker to recover plaintext from a TLS connection that uses CBC-mode encryption."
+luckydesc += " For more information visit http://www.isg.rhul.ac.uk/tls/Lucky13.html"
 
 descriptions["ROBOT"] = robotdesc
 descriptions["HEARTBLEED"] = heartbleeddesc
