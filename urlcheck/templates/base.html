@@ -42,7 +42,11 @@
 		</thead>
 		<tbody>
 			{% for i in resultList %}
-			<tr data-toggle="collapse" data-target="#{{i.0}}" class="accordion-toggle clickAble">
+				{% if i.0 == "WEAKCIPHERS" %}
+					<tr data-toggle="collapse" data-target="#{{i.0}}" class="accordion-toggle clickAble lineBreak">
+				{% else %}
+					<tr data-toggle="collapse" data-target="#{{i.0}}" class="accordion-toggle clickAble">
+				{% endif %}
 				<th scope="row">{{i.0}}</th>
 				<td>{{i.1}}</td>
 				{% if i.1 == "Not vulnerable" %}
