@@ -27,7 +27,7 @@ def check( hostname_user_input):
         print(u'hostname_user_input: '+hostname_user_input)
 
         # Strip http(s)
-        m = re.search('^(https?://)?(.*?)(/)?$', hostname_user_input)
+        m = re.search('^(https?://)?(.*?)(/).*$', hostname_user_input)
         hostname_user_input = m.group(2)
         if not hostname_user_input:
             raise RuntimeError(u'Please provide non-empty host name!')
