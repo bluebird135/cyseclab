@@ -27,14 +27,11 @@ def check( hostname_user_input):
         print(u'hostname_user_input: '+hostname_user_input)
 
         # Strip http(s)
-        m = re.search('^(https?://)?(.*?)(/).*$', hostname_user_input)
-        hostname_user_input = m.group(2)
-        if not hostname_user_input:
+        m = re.search('^(https?://)?(.*?)(/.*)?$', hostname_user_input)
+        if m.group(2):
+            hostname_user_input = m.group(2)
+        else:
             raise RuntimeError(u'Please provide non-empty host name!')
-        if m.group(1) != None:
-            print(u'Stripped '+m.group(1))
-        if m.group(3) != None:
-            print(u'Stripped trailing '+m.group(3))
 
         server_tester = ServerConnectivityTester(hostname_user_input)
         server_info = server_tester.perform(network_timeout=10)
