@@ -2,7 +2,7 @@
 from __future__ import absolute_import
 from __future__ import unicode_literals
 from sslyze.server_connectivity_info import ServerConnectivityInfo
-from sslyze.server_connectivity_tester import ServerConnectivityTester, ServerConnectivityError
+from sslyze.server_connectivity_tester import ServerConnectivityTester, ServerConnectivityError, ServerNotReachableError
 from sslyze.plugins.openssl_cipher_suites_plugin import Tlsv10ScanCommand, Tlsv11ScanCommand, Tlsv12ScanCommand, Tlsv13ScanCommand
 from sslyze.concurrent_scanner import ConcurrentScanner, PluginRaisedExceptionScanResult
 from sslyze.plugins.robot_plugin import RobotScanCommand, RobotScanResultEnum
@@ -37,7 +37,7 @@ def check( hostname_user_input):
         server_info = server_tester.perform(network_timeout=10)
     # Could not establish an SSL connection to the server
     except ServerConnectivityError as e:
-        raise RuntimeError(u'Error when connecting to {}: {}!'.format(hostname_user_input, e.error_msg))
+        raise RuntimeError(u'Error when connecting to {}: {}!'.format(hostname_user_input, e.error_message))
     # No SSL used
     except IOError as e:
         raise RuntimeError(u'Protocol does not use SSL/TLS!')
