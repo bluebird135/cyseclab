@@ -223,9 +223,8 @@ def getCertiDetails(url, cipherlist):
         pem = ssl.get_server_certificate((url, 443))
         cert = x509.load_pem_x509_certificate(pem.encode('ascii'), default_backend())
     except Exception as e:
-        raise RuntimeError(u'Could not retrieve certificate details from {}: {}!'.format(url, str(e)))
-    except:
-        raise RuntimeError(u'Could not retrieve certificate details from {}!'.format(url))
+        details["Error"] = (u'Could not retrieve certificate details from {}!'.format(url))
+        return details
 
     details["Common Name"] = cert.subject.get_attributes_for_oid(NameOID.COMMON_NAME)[0].value
     details["Version"] = str(cert.version)
