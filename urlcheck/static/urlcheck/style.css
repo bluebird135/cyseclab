@@ -11,6 +11,25 @@
 	margin-top: 10px;
 }
 
+.navbar-brand {
+	position: absolute;
+	width: 100%;
+	left: 0;
+	top: 0;
+	text-align: center;
+	margin: auto;
+	font-size: 250%;
+	color: black;
+}
+
+.navbar-toggle {
+	z-index:3;
+}
+
+.navbar-default .navbar-brand {
+    color: black;
+}
+
 #threatRow {
 	width: 65%;
 }

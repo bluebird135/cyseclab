@@ -99,3 +99,7 @@ class ResultView(TemplateView):
 
         context_dict = {'resultList': resultList, 'hostURL': url, 'certiData': certiData}
         return render(request, 'base.html', context_dict)
+
+
+class StatView(TemplateView):
+        template_name = 'statistics.html'
