@@ -51,6 +51,8 @@
 				<td>{{i.1}}</td>
 				{% if i.1 == "Not vulnerable" %}
 					<td><span class="glyphicon glyphicon-ok"></td>
+				{% elif i.1 == "Not mitigated on server-side" %}
+					<td><span class="glyphicon glyphicon-minus"></td>
 				{% else %}
 					<td><span class="glyphicon glyphicon-remove"></td>
 				{% endif %}

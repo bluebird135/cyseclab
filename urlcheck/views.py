@@ -38,6 +38,7 @@ weakciphersdesc += " For more information visit https://www.acunetix.com/blog/ar
 
 beastdesc = "The BEAST (Browser Exploit Against SSL/TLS) vulnerability exploits a flaw in TLS 1.0."
 beastdesc += " It uses a weakness in cipher block chaining (CBC) that enables a man-in-the-middle attack to obtain and decrypt authentication tokens."
+beastdesc += " BEAST is purely a client-side vulnerability. The scans performed by this page examine therefore merely whether the webserver mitigates the risk by not using CBC to encrypt the messages. The main risk of a BEAST attack should however be addressed by the browser. Most major browsers have already implemented such steps."
 beastdesc += " For more information vist https://blog.qualys.com/ssllabs/2013/09/10/is-beast-still-a-threat and read \"Here Come The ⊕ Ninjas\" by Thai Duong & Juliano Rizzo. May 13, 2011. http://nerdoholic.org/uploads/dergln/beast_part2/ssl_jun21.pdf"
 
 crimedesc = "CRIME (Compression Ratio Info-leak Made Easy) is a vulnerability in compressed HTTPS. "

@@ -42,6 +42,10 @@
 	color: red;
 }
 
+.glyphicon-minus {
+	color: grey;
+}
+
 .errorMessage {
 	color: red;
 	padding-bottom: 10px;
