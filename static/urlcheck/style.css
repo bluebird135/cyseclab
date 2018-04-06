@@ -11,6 +11,24 @@
 	margin-top: 10px;
 }
 
+.navbar-brand {
+	position: absolute;
+	width: 100%;
+	left: 0;
+	top: 0;
+	text-align: center;
+	margin: auto;
+	font-size: 250%;
+	color: black;
+}
+
+.navbar-toggle {
+	z-index:3;
+}
+
+.navbar-default .navbar-brand {
+    color: black;
+}
 
 #threatRow {
 	width: 65%;
@@ -22,6 +40,10 @@
 
 .glyphicon-remove {
 	color: red;
+}
+
+.glyphicon-minus {
+	color: grey;
 }
 
 .errorMessage {
@@ -59,12 +81,12 @@ h1 a:visited{
 	border: 3px solid #ddd;
 }
 
-.table tr {
+.clickAble {
 	cursor: pointer;
 }
 
-.clickAble {
-	cursor: pointer;
+.autoCursor {
+	cursor: auto;
 }
 
 #check_button {
