@@ -7,6 +7,7 @@ The project requires the following:\
 **Python** >3.0.0\
 **pip** for python3\
 **Django** >2.0.0\
+**cryptography** >=2.2\
 **virtualenv** (optional)
 
 ## Introductory reading
